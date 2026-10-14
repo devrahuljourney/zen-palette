@@ -1,0 +1,42 @@
+{
+  "manifest_version": 2,
+  "name": "Zen Palette",
+  "version": "2.0",
+  "description": "Spotlight-style keyboard palette for tabs, bookmarks, history and tab actions.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "zen-palette@local",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
+  "permissions": [
+    "tabs",
+    "sessions",
+    "search",
+    "bookmarks",
+    "history",
+    "clipboardWrite",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_title": "Zen Palette (Alt+K)"
+  },
+  "commands": {
+    "toggle-palette": {
+      "suggested_key": {
+        "default": "Alt+K"
+      },
+      "description": "Open the palette"
+    }
+  }
+}
