@@ -22,6 +22,7 @@
     moon: 'M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z',
   };
 
+  const TAB_CAP = 250;
   const MODES = { '>': 'actions', '@': 'tabs', '#': 'bookmarks', '!': 'history' };
   const MODE_LABEL = { actions: 'Actions', tabs: 'Tabs', bookmarks: 'Bookmarks', history: 'History' };
   const GO_LABEL = { tab: 'Switch', action: 'Run', bookmark: 'Open', history: 'Open', url: 'Open', closed: 'Restore', web: 'Search' };
@@ -119,6 +120,10 @@ kbd {
   padding: 3px 6px; min-width: 20px; text-align: center;
   border-radius: 5px; background: var(--kbd); color: var(--muted);
 }
+.num { width: 22px; flex: none; margin-right: -4px; text-align: right; font-size: 11.5px; font-variant-numeric: tabular-nums; color: var(--faint); }
+.row.sel .num { color: var(--muted); }
+.cur { font-size: 11px; color: var(--accent); }
+.more { padding: 8px 10px 4px 44px; font-size: 12px; color: var(--faint); }
 .empty { padding: 34px 20px; text-align: center; color: var(--faint); font-size: 13px; }
 
 .foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 38px; padding: 0 14px; border-top: 1px solid var(--hair); font-size: 12px; color: var(--muted); flex: none; }
@@ -261,7 +266,7 @@ kbd {
     const panel = el('div', 'panel');
     const bar = el('div', 'bar');
     const input = el('input');
-    input.placeholder = 'Search tabs, bookmarks, history…';
+    input.placeholder = 'Search tabs, bookmarks, history… or type a tab number';
     input.spellcheck = false;
     input.autocomplete = 'off';
     const chip = el('span', 'chip');
@@ -312,12 +317,26 @@ kbd {
       }
 
       if (mode === 'all' || mode === 'tabs') {
-        const ranked = data.tabs
-          .map((t) => ({ t, s: has ? matchItem(words, t.title, t.url) : 0 }))
+        // Sidebar order: current window first, then each tab's position. Numbers match Ctrl+1…8.
+        const ordered = [...data.tabs].sort(
+          (a, b) => (b.windowId === data.currentWindowId) - (a.windowId === data.currentWindowId) || a.windowId - b.windowId || a.index - b.index,
+        );
+        const perWindow = new Map();
+        for (const t of ordered) {
+          const n = (perWindow.get(t.windowId) || 0) + 1;
+          perWindow.set(t.windowId, n);
+          t.num = n;
+        }
+        const numQuery = /^\d+$/.test(text) ? Number(text) : null;
+        const byNumber = numQuery && ordered.find((t) => t.windowId === data.currentWindowId && t.num === numQuery);
+        let ranked = ordered
+          .map((t) => ({ t, s: t === byNumber ? Infinity : has ? matchItem(words, t.title, t.url) : 0 }))
           .filter((x) => x.s >= 0);
-        if (has) ranked.sort((a, b) => b.s - a.s || b.t.lastAccessed - a.t.lastAccessed);
-        else ranked.sort((a, b) => (a.t.id === data.currentId) - (b.t.id === data.currentId) || b.t.lastAccessed - a.t.lastAccessed);
-        sections.push(['Tabs', ranked.map(({ t }) => ({ kind: 'tab', tab: t, title: t.title || t.url, sub: prettyUrl(t.url), url: t.url, icon: t.favIconUrl }))]);
+        if (has) ranked.sort((a, b) => b.s - a.s || a.t.num - b.t.num);
+        const total = ranked.length;
+        ranked = ranked.slice(0, TAB_CAP);
+        const rows = ranked.map(({ t }) => ({ kind: 'tab', tab: t, num: t.num, title: t.title || t.url, sub: prettyUrl(t.url), url: t.url, icon: t.favIconUrl }));
+        sections.push([`Tabs · ${total}`, rows, total > TAB_CAP ? `${total - TAB_CAP} more — type to filter` : null]);
       }
 
       if (mode === 'actions' || (mode === 'all' && has)) {
@@ -408,6 +427,8 @@ kbd {
       go.append(el('kbd', null, '↵'));
       acc.append(go);
 
+      if (it.tab?.id === data.currentId) acc.prepend(el('span', 'cur', 'Current'));
+      r.append(el('span', 'num', it.num != null ? String(it.num) : ''));
       r.append(iconFor(it), tx, acc);
       return r;
     }
@@ -421,7 +442,7 @@ kbd {
       items = [];
       rowEls = [];
       const frag = document.createDocumentFragment();
-      for (const [name, arr] of sections) {
+      for (const [name, arr, more] of sections) {
         if (!arr.length) continue;
         frag.append(el('div', 'sec', name));
         for (const it of arr) {
@@ -431,12 +452,14 @@ kbd {
           rowEls.push(r);
           frag.append(r);
         }
+        if (more) frag.append(el('div', 'more', more));
       }
       if (!items.length) frag.append(el('div', 'empty', 'No results'));
       list.textContent = '';
       list.append(frag);
 
-      let idx = 0;
+      // With an empty search, start on the current tab, like the sidebar.
+      let idx = words.length ? 0 : Math.max(0, items.findIndex((i) => i.tab?.id === data.currentId));
       if (keepKey) {
         const k = items.findIndex((i) => keyOf(i) === keepKey);
         idx = k >= 0 ? k : Math.min(sel, items.length - 1);

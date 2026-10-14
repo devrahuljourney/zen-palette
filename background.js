@@ -103,10 +103,12 @@ async function getState() {
   ]);
   return {
     currentId: ctx?.tabId,
+    currentWindowId: ctx?.windowId,
     actions: ACTIONS,
     tabs: tabs.map((t) => ({
       id: t.id,
       windowId: t.windowId,
+      index: t.index,
       title: t.title,
       url: t.url,
       favIconUrl: t.favIconUrl,
