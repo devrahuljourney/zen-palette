@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Zen Palette",
-  "version": "2.1",
-  "description": "Spotlight-style keyboard palette for tabs, bookmarks, history and tab actions.",
+  "version": "2.2",
+  "description": "Spotlight-style keyboard palette for tabs, bookmarks, history, page actions and developer tools.",
   "browser_specific_settings": {
     "gecko": {
       "id": "zen-palette@local",
@@ -20,7 +20,11 @@
     "search",
     "bookmarks",
     "history",
+    "storage",
+    "browsingData",
+    "cookies",
     "clipboardWrite",
+    "clipboardRead",
     "<all_urls>"
   ],
   "background": {
@@ -38,5 +42,9 @@
       },
       "description": "Open the palette"
     }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
   }
 }

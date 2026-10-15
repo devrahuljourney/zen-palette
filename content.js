@@ -2,20 +2,17 @@
   if (window.__zenPaletteContent) return;
   window.__zenPaletteContent = true;
 
+  // The host never blocks the page: only the palette panel itself takes clicks.
   const host = document.createElement('zen-palette-root');
-  const hide = () => host.style.setProperty('display', 'none', 'important');
-  host.style.setProperty('position', 'fixed', 'important');
-  host.style.setProperty('inset', '0', 'important');
-  host.style.setProperty('z-index', '2147483647', 'important');
-  hide();
+  for (const [k, v] of Object.entries({ position: 'fixed', inset: '0', 'z-index': '2147483647', 'pointer-events': 'none', display: 'block' })) {
+    host.style.setProperty(k, v, 'important');
+  }
 
   const ui = window.__zenPaletteUI.mount(host, {
     mode: 'overlay',
     onShow: () => {
       if (!host.isConnected) document.documentElement.appendChild(host);
-      host.style.setProperty('display', 'block', 'important');
     },
-    onClose: hide,
   });
 
   document.documentElement.appendChild(host);

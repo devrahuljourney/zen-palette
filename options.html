@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Zen Palette Settings</title>
+  <style>
+    :root { --bg: #f5f5f7; --card: #fff; --text: #1d1d1f; --muted: #6e6e73; --line: rgba(0,0,0,.1); --accent: #6e56cf; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #161618; --card: #1f1f23; --text: #f2f2f7; --muted: #9a9aa3; --line: rgba(255,255,255,.1); --accent: #b4a7ff; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 -apple-system, "Inter", "Segoe UI", "Ubuntu", system-ui, sans-serif; }
+    main { max-width: 720px; margin: 48px auto; padding: 0 20px; }
+    h1 { font-size: 24px; margin: 0 0 24px; }
+    section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+    h2 { font-size: 15px; margin: 0 0 6px; }
+    p { margin: 0 0 12px; color: var(--muted); }
+    code { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 12.5px; }
+    textarea { width: 100%; min-height: 140px; padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: 13px/1.6 ui-monospace, "JetBrains Mono", monospace; resize: vertical; }
+    button { margin-top: 12px; padding: 8px 16px; border: 0; border-radius: 9px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+    button.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); font-weight: 500; }
+    #status { margin-left: 10px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Zen Palette</h1>
+    <section>
+      <h2>Environments</h2>
+      <p>One app per line. List the sites that run the same app, separated by spaces. <b>Switch Environment</b> then jumps between them on the same path.</p>
+      <textarea id="envs" spellcheck="false" placeholder="localhost:3000  staging.example.com  example.com"></textarea>
+      <button id="save">Save</button><span id="status"></span>
+    </section>
+    <section>
+      <h2>Learned actions</h2>
+      <p>The palette counts which actions you use and shows your favourites first. This is stored only in your browser.</p>
+      <button id="reset" class="secondary">Reset learned order</button>
+    </section>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
