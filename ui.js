@@ -131,8 +131,8 @@ svg { display: block; }
 .wrap { position: fixed; inset: 0; z-index: 2147483647; pointer-events: auto; }
 .backdrop { position: absolute; inset: 0; background: var(--dim); animation: fade 0.16s ease-out; }
 .panel {
-  position: absolute; left: 50%; top: 11vh; transform: translateX(-50%);
-  width: min(740px, calc(100vw - 32px)); max-height: min(660px, 84vh);
+  position: absolute; left: 50%; top: 9vh; transform: translateX(-50%);
+  width: min(720px, calc(100vw - 32px)); max-height: min(760px, 86vh);
   display: flex; flex-direction: column; overflow: hidden;
   background: var(--panel);
   backdrop-filter: blur(40px) saturate(180%);
@@ -144,7 +144,7 @@ svg { display: block; }
 @keyframes fade { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .panel, .backdrop { animation: none; } }
 
-.bar { display: flex; align-items: center; gap: 12px; height: 58px; padding: 0 20px; flex: none; }
+.bar { display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 20px; flex: none; }
 .bar > svg { width: 20px; height: 20px; color: var(--muted); flex: none; }
 input {
   all: unset; flex: 1; min-width: 0;
@@ -154,19 +154,18 @@ input {
 input::placeholder { color: var(--faint); }
 input::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); }
 
-.cur { display: flex; align-items: center; gap: 12px; margin: 0 10px; padding: 8px 10px; border-radius: 12px; cursor: pointer; flex: none; }
+.cur { display: flex; align-items: center; gap: 10px; margin: 0 12px; padding: 5px 10px; border-radius: 10px; cursor: pointer; flex: none; font-size: 12.5px; color: var(--faint); min-width: 0; }
 .cur:hover { background: var(--well); }
 .cur.editing { background: var(--well); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent); }
-.cur .ic { width: 28px; height: 28px; border-radius: 8px; }
-.cur .ti { font-size: 13px; }
-.cbtns { display: flex; gap: 6px; flex: none; }
-.cbtn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 8px; font-size: 12px; color: var(--muted); background: var(--well); cursor: pointer; }
-.cbtn:hover { color: var(--text); background: var(--sel); }
-.cbtn svg { width: 13px; height: 13px; }
-.cbtn kbd { margin-left: 2px; }
+.cur .ic { width: 18px; height: 18px; border-radius: 4px; background: none; }
+.cur .ic img { width: 16px; height: 16px; }
+.cur .ic .lt { font-size: 10px; border-radius: 4px; }
+.cur .su { flex: 1; min-width: 0; font-size: 12.5px; }
+.cur .k { display: inline-flex; align-items: center; gap: 6px; flex: none; white-space: nowrap; }
+.cur .k kbd + kbd, .cur .k span + kbd { margin-left: 6px; }
 
-.filters { display: flex; gap: 2px; margin: 8px 12px 4px; padding: 3px; border-radius: 12px; background: var(--well); flex: none; }
-.f { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 6px; border-radius: 9px; font-size: 13px; color: var(--muted); white-space: nowrap; cursor: default; min-width: 0; }
+.filters { display: flex; gap: 2px; margin: 6px 12px 2px; padding: 2px; border-radius: 10px; background: var(--well); flex: none; }
+.f { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; height: 26px; padding: 0 6px; border-radius: 8px; font-size: 12.5px; color: var(--muted); white-space: nowrap; cursor: default; min-width: 0; }
 .f svg { width: 14px; height: 14px; flex: none; }
 .f:hover { color: var(--text); }
 .f.on { background: var(--seg); color: var(--text); font-weight: 600; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), inset 0 0 0 1px var(--hair); }
@@ -177,28 +176,33 @@ input::selection { background: color-mix(in srgb, var(--accent) 35%, transparent
 .crumb .sp { flex: 1; }
 .crumb .k { display: inline-flex; align-items: center; gap: 6px; font-weight: 400; font-size: 12px; color: var(--muted); }
 
-.chips { display: flex; gap: 8px; padding: 8px 20px 4px; flex: none; overflow-x: auto; scrollbar-width: none; mask-image: linear-gradient(90deg, #000 92%, transparent); }
+.chips { display: flex; gap: 8px; padding: 8px 14px 2px; flex: none; overflow-x: auto; scrollbar-width: none; mask-image: linear-gradient(90deg, #000 92%, transparent); }
 .chip { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 13px; border-radius: 999px; background: var(--well); border: 1px solid var(--hair); font-size: 13px; white-space: nowrap; cursor: default; }
 .chip svg { width: 14px; height: 14px; color: var(--accent); }
 .chip:hover, .chip.sel { background: var(--sel); border-color: var(--border); }
 .chip.sel { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent); }
 
 .list { flex: 1; overflow-y: auto; padding: 4px 10px 10px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--kbd) transparent; }
-.sec { font-size: 11.5px; font-weight: 600; color: var(--faint); padding: 12px 10px 6px; letter-spacing: 0.02em; }
-.row { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 7px 10px 7px 4px; border-radius: 12px; border: 1px solid transparent; cursor: default; }
-.row.compact { min-height: 42px; padding-top: 4px; padding-bottom: 4px; }
+.sec { font-size: 11.5px; font-weight: 600; color: var(--faint); padding: 10px 10px 4px; letter-spacing: 0.02em; }
+.row { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 4px 10px 4px 2px; border-radius: 10px; border: 1px solid transparent; cursor: default; }
+.comfy .row { gap: 12px; min-height: 54px; padding-top: 7px; padding-bottom: 7px; border-radius: 12px; }
+.comfy .row.compact { min-height: 42px; padding-top: 4px; padding-bottom: 4px; }
 .row.sel { background: var(--sel); border-color: var(--hair); }
 .num { width: 20px; flex: none; text-align: right; font-size: 11.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
-.ic { width: 32px; height: 32px; border-radius: 9px; background: var(--ic); display: grid; place-items: center; flex: none; color: var(--muted); overflow: hidden; }
-.compact .ic { width: 28px; height: 28px; border-radius: 8px; }
-.ic img { width: 18px; height: 18px; border-radius: 4px; }
-.ic svg { width: 16px; height: 16px; }
-.ic .lt { width: 100%; height: 100%; display: grid; place-items: center; font-size: 13px; font-weight: 700; color: #fff; }
-.tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.ti { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.compact .ti { font-weight: 500; }
+.ic { width: 26px; height: 26px; border-radius: 7px; background: var(--ic); display: grid; place-items: center; flex: none; color: var(--muted); overflow: hidden; }
+.comfy .ic { width: 32px; height: 32px; border-radius: 9px; }
+.comfy .compact .ic { width: 28px; height: 28px; border-radius: 8px; }
+.ic img { width: 16px; height: 16px; border-radius: 4px; }
+.comfy .ic img { width: 18px; height: 18px; }
+.ic svg { width: 15px; height: 15px; }
+.ic .lt { width: 100%; height: 100%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; }
+.tx { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; }
+.comfy .tx { flex-direction: column; align-items: stretch; gap: 3px; }
+.ti { flex: 0 1 auto; max-width: 72%; font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.comfy .ti { max-width: none; font-size: 14px; font-weight: 600; }
+.comfy .compact .ti { font-weight: 500; }
 .grp { font-weight: 400; font-size: 12px; color: var(--faint); margin-left: 10px; }
-.su { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--faint); }
+.su { flex: 1 1 0; min-width: 40px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--faint); }
 .su .dom { color: var(--muted); }
 .mono { font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace; font-size: 13px; font-weight: 500; }
 mark { background: none; color: var(--accent); font-weight: inherit; }
@@ -206,8 +210,9 @@ mark { background: none; color: var(--accent); font-weight: inherit; }
 .acc > svg { width: 14px; height: 14px; }
 .curtag { font-size: 11px; color: var(--accent); }
 .btns { display: none; gap: 2px; }
-.row.sel .btns, .row:hover .btns { display: flex; }
-.btn { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: var(--muted); cursor: pointer; }
+.row:hover .btns { display: flex; }
+.row:hover .go { display: none; }
+.btn { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; color: var(--muted); cursor: pointer; }
 .btn:hover, .btn.on { background: var(--kbd); color: var(--text); }
 .btn svg { width: 15px; height: 15px; }
 .go { display: none; align-items: center; gap: 7px; margin-left: 4px; color: var(--accent); font-weight: 500; font-size: 12.5px; white-space: nowrap; }
@@ -509,7 +514,16 @@ kbd {
     const text = () => input.value.trim();
     const wordsOf = (t) => t.toLowerCase().split(/\s+/).filter(Boolean);
     const usageOf = (id) => data.usage?.[id] || 0;
-    const chipsVisible = () => filter === 'all' && !text() && !view && !editUrl && chips.length > 0;
+    const chipsVisible = () => filter === 'actions' && !text() && !view && !editUrl && chips.length > 0;
+    const currentOrigin = () => {
+      try {
+        const u = new URL(data.current?.url);
+        return /^https?:$/.test(u.protocol) ? u.origin : null;
+      } catch {
+        return null;
+      }
+    };
+    const stripScheme = (u) => (u || '').replace(/^[a-z]+:\/\//i, '').replace(/^www\./, '');
 
     // ----- building the list -----
 
@@ -554,6 +568,30 @@ kbd {
       return ranked.map(({ x }) => ({ kind, url: x.url, title: x.title || x.url, glyph: kind === 'bookmark' ? 'star' : 'clock' }));
     }
 
+    // Address-bar style suggestions for a URL being typed or edited.
+    function urlSuggestions(t) {
+      const q = stripScheme(t).toLowerCase();
+      if (q.length < 2) return [];
+      const matches = (u) => stripScheme(u).toLowerCase().includes(q);
+      const tabs = data.tabs
+        .filter((x) => x.id !== data.currentId && matches(x.url))
+        .slice(0, 5)
+        .map((tab) => ({ kind: 'tab', tab, title: tab.title || tab.url, url: tab.url, icon: tab.favIconUrl }));
+      const seen = new Set([stripScheme(t), stripScheme(data.current?.url), ...tabs.map((x) => stripScheme(x.url))]);
+      const pages = [];
+      if (remote.mode === 'url') {
+        const pool = [...remote.bookmarks.map((b) => ({ ...b, bm: true })), ...[...remote.history].sort((a, b) => b.visits - a.visits)];
+        for (const x of pool) {
+          const key = stripScheme(x.url);
+          if (!matches(x.url) || seen.has(key)) continue;
+          seen.add(key);
+          pages.push({ kind: 'nav', key: `s:${x.url}`, url: x.url, title: x.title || x.url, glyph: x.bm ? 'star' : 'clock' });
+          if (pages.length === 8) break;
+        }
+      }
+      return [{ name: 'Open Tabs', items: tabs }, { name: 'Suggestions', items: pages }];
+    }
+
     function build() {
       const t = text();
       const words = wordsOf(t);
@@ -572,6 +610,7 @@ kbd {
         if (t) {
           const isUrl = looksLikeUrl(t) || /^[a-z]+:/i.test(t);
           S.push({ items: [{ kind: 'nav', key: 'nav', url: t, title: isUrl ? t : `Search the web for “${t}”`, glyph: isUrl ? 'globe' : 'search', compact: true, mono: isUrl }] });
+          S.push(...urlSuggestions(t));
         }
         return { S, words: [], counts };
       }
@@ -594,16 +633,22 @@ kbd {
       if (remoteOk && (has || filter === 'bookmarks')) counts.bookmarks = bmR.length;
       if (remoteOk && (has || filter === 'history')) counts.history = hiR.length;
 
+      const origin = currentOrigin();
+      if (filter === 'all' && t.startsWith('/') && origin) {
+        S.push({ name: 'Go to', items: [{ kind: 'nav', key: 'path', url: origin + t, title: stripScheme(origin) + t, glyph: 'globe', compact: true, mono: true }] });
+        S.push(...urlSuggestions(stripScheme(origin) + t));
+        return { S, words: [], counts };
+      }
+
       if (filter === 'all') {
         const tl = tools(t);
         if (tl.length) S.push({ name: tl[0].kind === 'go' ? 'Search' : 'Tools', items: tl });
         if (looksLikeUrl(t)) S.push({ name: 'Go to', items: [{ kind: 'url', key: 'goto', url: t, title: t, glyph: 'globe', compact: true, mono: true }] });
         const cap = has ? TAB_CAP_MIXED : 100;
-        S.push({ name: `Tabs · ${tabsR.length}`, items: tabsR.slice(0, cap), more: tabsR.length > cap ? `${tabsR.length - cap} more — press Tab for all tabs` : null });
+        S.push({ name: has ? `Tabs · ${tabsR.length}` : null, items: tabsR.slice(0, cap), more: tabsR.length > cap ? `${tabsR.length - cap} more — press Tab for all tabs` : null });
         if (has) S.push({ name: 'Actions', items: actsR.slice(0, 5) });
         if (has) S.push({ name: 'Bookmarks', items: bmR.slice(0, 4) });
         if (has) S.push({ name: 'History', items: hiR.slice(0, 6) });
-        S.push({ name: 'Recently Closed', items: closedR.slice(0, has ? 3 : 4) });
         if (has && !looksLikeUrl(t) && !tl.some((x) => x.kind === 'go')) S.push({ name: 'Search', items: [{ kind: 'web', key: 'web', query: t, title: `Search the web for “${t}”`, glyph: 'search', compact: true }] });
       } else if (filter === 'tabs') {
         S.push({ name: `Tabs · ${tabsR.length}`, items: tabsR.slice(0, TAB_CAP), more: tabsR.length > TAB_CAP ? `${tabsR.length - TAB_CAP} more — type to filter` : null });
@@ -616,8 +661,6 @@ kbd {
       } else if (filter === 'actions') {
         if (has) S.push({ name: 'Actions', items: actsR });
         else {
-          const frequent = data.actions.filter((a) => usageOf(a.id) > 0).sort((a, b) => usageOf(b.id) - usageOf(a.id)).slice(0, 6);
-          if (frequent.length) S.push({ name: 'Frequently Used', items: frequent.map((a) => ({ ...actionItem(a), key: `f:${a.id}` })) });
           for (const g of GROUPS) S.push({ name: g, items: actsR.filter((a) => a.sub === g).map((a) => ({ ...a, sub: '' })) });
         }
       }
@@ -658,7 +701,7 @@ kbd {
       tx.append(ti);
       if (it.compact) {
         if (it.sub) ti.append(el('span', 'grp', it.sub));
-      } else if (['tab', 'bookmark', 'history', 'closed'].includes(it.kind)) {
+      } else if (['tab', 'bookmark', 'history', 'closed', 'nav'].includes(it.kind)) {
         tx.append(urlLine(it.url));
       } else if (it.sub) {
         tx.append(el('div', 'su', it.sub));
@@ -698,20 +741,10 @@ kbd {
       cur.textContent = '';
       if (!c) return;
       cur.classList.toggle('editing', editUrl);
-      const tx = el('div', 'tx');
-      tx.append(el('div', 'ti', c.title || c.url), urlLine(c.url));
-      const btns = el('div', 'cbtns');
-      const copyB = el('button', 'cbtn');
-      copyB.title = 'Copy URL (Alt C)';
-      copyB.append(svg('copy'), 'Copy');
-      copyB.addEventListener('click', (e) => {
-        e.stopPropagation();
-        copyText(c.url, 'URL copied');
-      });
-      const editB = el('button', 'cbtn');
-      editB.append(svg('edit'), 'Edit', el('kbd', null, 'Ctrl L'));
-      btns.append(copyB, editB);
-      cur.append(iconFor({ kind: 'tab', icon: c.favIconUrl, url: c.url }), tx, btns);
+      cur.title = c.title || '';
+      const k = el('span', 'k');
+      k.append(el('kbd', null, 'Alt L'), 'Edit', el('kbd', null, 'Alt C'), 'Copy');
+      cur.append(iconFor({ kind: 'tab', icon: c.favIconUrl, url: c.url }), urlLine(c.url), k);
     }
 
     function renderFilters(counts) {
@@ -719,8 +752,8 @@ kbd {
       filtersEl.textContent = '';
       for (const [id, label, icon] of FILTERS) {
         const b = el('div', filter === id ? 'f on' : 'f');
-        b.append(svg(icon), label);
-        if (counts[id] != null && id !== 'all') b.append(el('span', 'n', String(counts[id])));
+        b.append(label);
+        if (id === 'tabs' && counts.tabs != null) b.append(el('span', 'n', String(counts.tabs)));
         b.addEventListener('mousedown', (e) => {
           e.preventDefault();
           setFilter(id);
@@ -747,7 +780,7 @@ kbd {
       chips = [];
       chipEls = [];
       chipsEl.textContent = '';
-      const show = filter === 'all' && !text() && !view && !editUrl;
+      const show = filter === 'actions' && !text() && !view && !editUrl;
       if (show) {
         const avail = new Map(data.actions.map((a) => [a.id, a]));
         const used = data.actions.filter((a) => usageOf(a.id) > 0).sort((a, b) => usageOf(b.id) - usageOf(a.id));
@@ -778,6 +811,7 @@ kbd {
 
     function render(keepKey) {
       const { S, words, counts } = build();
+      zp.classList.toggle('comfy', data.density === 'comfortable');
       renderCurrent();
       renderFilters(counts);
       renderCrumb();
@@ -846,7 +880,7 @@ kbd {
         if (view.canDelete && it.key !== '__all') h.push(['⇧ Del', 'Delete']);
         return h;
       }
-      if (it.kind === 'tab') return [['↵', 'Switch'], ['⇧ Del', 'Close'], ['Alt P', 'Pin'], ['Alt B', 'Bookmark'], ['Alt M', 'Mute']];
+      if (it.kind === 'tab') return [['↵', 'Switch'], ['⇧ Del', 'Close'], ['Alt P', 'Pin']];
       if (it.kind === 'nav') return [['↵', 'Open here'], ['⇧ ↵', 'New tab']];
       if (['bookmark', 'history', 'url', 'go', 'web'].includes(it.kind)) return [['↵', 'New tab'], ['⇧ ↵', 'This tab'], ['Alt C', 'Copy URL']];
       return [['↵', GO_LABEL[it.kind] || 'Select']];
@@ -860,7 +894,7 @@ kbd {
         footL.append(s);
       }
       footR.textContent = '';
-      const right = view || editUrl ? [['Esc', 'Back']] : [['Tab', 'Filter'], ['Ctrl L', 'Edit URL'], ['>', 'Actions']];
+      const right = view || editUrl ? [['Esc', 'Back']] : [['Tab', 'Filter'], ['/', 'Path'], ['Alt L', 'Edit URL'], ['>', 'Actions']];
       for (const [k, label] of right) {
         const s = el('span', 'k');
         s.append(el('kbd', null, k), label);
@@ -903,16 +937,21 @@ kbd {
 
     function scheduleSearch() {
       clearTimeout(timer);
-      if (view || editUrl) return;
+      if (view) return;
       const t = text();
-      if (!(filter === 'all' ? t : filter === 'bookmarks' || filter === 'history')) {
+      let mode = filter;
+      let q = t;
+      if (editUrl || (filter === 'all' && t.startsWith('/') && currentOrigin())) {
+        mode = 'url';
+        q = editUrl ? stripScheme(t) : stripScheme(currentOrigin()) + t;
+        if (q.length < 2) return;
+      } else if (!(filter === 'all' ? t : filter === 'bookmarks' || filter === 'history')) {
         remote = { mode: null, bookmarks: [], history: [] };
         return;
       }
       const tk = ++token;
-      const mode = filter;
       timer = setTimeout(async () => {
-        const r = await send({ type: 'search', q: t, mode });
+        const r = await send({ type: 'search', q, mode });
         if (tk !== token || !isOpen) return;
         remote = r;
         render(sel > 0 && items[sel] ? keyOf(items[sel]) : null);
@@ -925,9 +964,11 @@ kbd {
       editUrl = true;
       chipSel = null;
       input.value = data.current.url;
+      remote = { mode: null, bookmarks: [], history: [] };
       render(null);
       input.focus();
       input.select();
+      scheduleSearch();
     }
 
     function showView(v) {

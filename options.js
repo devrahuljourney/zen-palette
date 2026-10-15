@@ -6,8 +6,16 @@ const flash = (msg) => {
   setTimeout(() => (status.textContent = ''), 2000);
 };
 
-browser.storage.local.get('envs').then((r) => {
+const density = document.getElementById('density');
+
+browser.storage.local.get(['envs', 'density']).then((r) => {
   envs.value = r.envs || '';
+  density.value = r.density || 'compact';
+});
+
+density.addEventListener('change', async () => {
+  await browser.storage.local.set({ density: density.value });
+  flash('Saved');
 });
 
 document.getElementById('save').addEventListener('click', async () => {

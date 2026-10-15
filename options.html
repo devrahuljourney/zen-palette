@@ -15,6 +15,7 @@
     p { margin: 0 0 12px; color: var(--muted); }
     code { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 12.5px; }
     textarea { width: 100%; min-height: 140px; padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: 13px/1.6 ui-monospace, "JetBrains Mono", monospace; resize: vertical; }
+    select { padding: 8px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; }
     button { margin-top: 12px; padding: 8px 16px; border: 0; border-radius: 9px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
     button.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); font-weight: 500; }
     #status { margin-left: 10px; color: var(--muted); }
@@ -28,6 +29,14 @@
       <p>One app per line. List the sites that run the same app, separated by spaces. <b>Switch Environment</b> then jumps between them on the same path.</p>
       <textarea id="envs" spellcheck="false" placeholder="localhost:3000  staging.example.com  example.com"></textarea>
       <button id="save">Save</button><span id="status"></span>
+    </section>
+    <section>
+      <h2>Row size</h2>
+      <p>Compact fits about twice as many tabs on screen. Comfortable shows the URL on its own line.</p>
+      <select id="density">
+        <option value="compact">Compact (one line)</option>
+        <option value="comfortable">Comfortable (two lines)</option>
+      </select>
     </section>
     <section>
       <h2>Learned actions</h2>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Zen Palette",
-  "version": "2.2",
+  "version": "2.3",
   "description": "Spotlight-style keyboard palette for tabs, bookmarks, history, page actions and developer tools.",
   "browser_specific_settings": {
     "gecko": {

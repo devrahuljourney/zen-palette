@@ -10,6 +10,11 @@ Press **Alt + K** to search tabs, bookmarks, history and run tab actions.
 | `@` | Tabs only |
 | `#` | Bookmarks |
 | `!` | History |
+| `~` | Recently closed |
+
+Typing `/path` jumps to that path on the current site. **Alt + L** edits the current URL with address-bar suggestions. **Tab** cycles the filters.
+
+Row size, environments (for *Switch Environment*) and the learned action order live in the extension's settings page.
 
 ## Develop
 

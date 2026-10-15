@@ -6,12 +6,15 @@ const GH_RESERVED = new Set(['settings', 'orgs', 'marketplace', 'notifications',
 let ctx = null;
 let paletteWin = null;
 let usage = {};
+let density = 'compact';
 
-browser.storage.local.get('usage').then((r) => {
+browser.storage.local.get(['usage', 'density']).then((r) => {
   usage = r.usage || {};
+  density = r.density || 'compact';
 });
 browser.storage.onChanged.addListener((changes) => {
   if (changes.usage) usage = changes.usage.newValue || {};
+  if (changes.density) density = changes.density.newValue || 'compact';
 });
 
 // ---------- helpers ----------
@@ -302,7 +305,7 @@ const ACTIONS = [
   { id: 'zoom-reset', title: 'Reset Zoom', group: 'Page', icon: 'zoom', hint: 'Ctrl 0', kw: 'actual size', run: (i) => browser.tabs.setZoom(i.tab.id, 0) },
 
   // Navigate
-  { id: 'edit-url', title: 'Edit Current URL', group: 'Navigate', icon: 'edit', hint: 'Ctrl L', kw: 'address change', stay: true, run: () => ({}) },
+  { id: 'edit-url', title: 'Edit Current URL', group: 'Navigate', icon: 'edit', hint: 'Alt L', kw: 'address change', stay: true, run: () => ({}) },
   { id: 'back', title: 'Go Back', group: 'Navigate', icon: 'left', hint: 'Alt ←', kw: 'previous history', run: (i) => browser.tabs.goBack(i.tab.id) },
   { id: 'forward', title: 'Go Forward', group: 'Navigate', icon: 'right', hint: 'Alt →', kw: 'next history', run: (i) => browser.tabs.goForward(i.tab.id) },
   {
@@ -784,6 +787,7 @@ async function getState() {
     currentWindowId: ctx?.windowId,
     current: cur && { title: cur.title, url: cur.url, favIconUrl: cur.favIconUrl },
     usage,
+    density,
     actions: ACTIONS.filter((a) => !a.when || (i && a.when(i))).map(({ id, title, kw, group, icon, hint, stay }) => ({ id, title, kw, group, icon, hint, stay })),
     tabs: tabs.map((t) => ({
       id: t.id,
